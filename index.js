@@ -3,7 +3,7 @@ function computeRegisters() {
   CR=myCR.selectedIndex+1;
   HM=myHM.selectedIndex;
   cm="// BW = "+BW+": "+myBW.value+", C/R = "+CR+": 4/"+(CR+4)+", HM = "+HM+"\n";
-  reg1=parseInt(BW)*16+parseInt(CR)*2;
+  reg1=parseInt(BW)*16+parseInt(CR)*2+parseInt(HM);
   s="";
   if (reg1<16) s="0";
   s="uint8_t reg1 = 0x"+s+reg1.toString(16)+";";
