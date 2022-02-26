@@ -1,6 +1,6 @@
 function computeRegisters() {
   BW=myBW.selectedIndex;
-  CR=myCR.selectedIndex;
+  CR=myCR.selectedIndex+1;
   HM=myHM.selectedIndex;
   cm="// BW = "+BW+": "+myBW.value+", C/R = "+CR+": 4/"+(CR+4)+", HM = "+HM+"\n";
   reg1=parseInt(BW)*16+parseInt(CR)*2;
