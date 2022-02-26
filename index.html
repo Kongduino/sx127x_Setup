@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>sx127x setup</title>
+    <link rel="stylesheet" href="./highlight/styles/default.min.css">
+    <script src="./highlight/highlight.min.js"></script>
+    <script src="./index.js"></script>
+    <script>hljs.highlightAll();</script>
+		<link rel="stylesheet" href="./jqm/jquery.mobile-1.4.5.min.css">
+		<script src="./jqm/js/jquery.js"></script>
+		<script src="./jqm/js/jquery.mobile-1.4.5.min.js"></script>
+  </head>
+  <body>
+    <div class="ui-field-contain">
+      <fieldset data-role="controlgroup">
+      <h1>RegModemConfig1</h1>
+        <label for="myBW">BW</label>
+        <select onChange="computeRegisters();" id="myBW">
+          <option>BW 7.8 kHz</option>
+          <option>BW 10.4 kHz</option>
+          <option>BW 15.6 kHz</option>
+          <option>BW 20.8kHz</option>
+          <option>BW 31.25 kHz</option>
+          <option>BW 41.7 kHz</option>
+          <option>BW 62.5 kHz</option>
+          <option selected>125 kHz</option>
+          <option>BW 250 kHz</option>
+          <option>BW 500 kHz</option>
+        </select>
+
+        <label for="myCR">C/R</label>
+        <select onChange="computeRegisters();" id="myCR">
+          <option selected>4/5</option>
+          <option>C/R 4/6</option>
+          <option>C/R 4/7</option>
+          <option>C/R 4/8</option>
+        </select>
+
+        <label for="myHM">Header</label>
+        <select onChange="computeRegisters();" id="myHM">
+          <option selected>Explicit Header</option>
+          <option>Implicit Header</option>
+        </select>
+      </fieldset>
+
+      <fieldset data-role="controlgroup">
+      <h1>RegModemConfig2</h1>
+        <label for="mySF">SF</label>
+        <select onChange="computeRegisters();" id="mySF">
+          <option>SF 6</option>
+          <option>SF 7</option>
+          <option>SF 8</option>
+          <option>SF 9</option>
+          <option>SF 10</option>
+          <option>SF 11</option>
+          <option selected>SF 12</option>
+        </select>
+
+        <label for="myCRC">CRC</label>
+        <select onChange="computeRegisters();" id="myCRC">
+          <option selected>CRC OFF</option>
+          <option>CRC ON</option>
+        </select>
+      </fieldset>
+
+      <fieldset data-role="controlgroup">
+      <h1>RegModemConfig3</h1>
+        <label for="myLowData">LowData</label>
+        <select onChange="computeRegisters();" id="myLowData">
+          <option>LowDataRateOptimize Disabled</option>
+          <option selected>LowDataRateOptimize Enabled</option>
+        </select>
+
+        <label for="myAGC">AGC</label>
+        <select onChange="computeRegisters();" id="myAGC">
+          <option>LNA gain set by LnaGain</option>
+          <option selected>LNA gain set by AGC loop</option>
+        </select>
+      </fieldset>
+
+      <fieldset data-role="controlgroup">
+      <h1>RegPaConfig</h1>
+        <label for="myPaSelect">PaSelect</label>
+        <select onChange="computeRegisters();" id="myPaSelect">
+          <option>RFO pin (+14 dBm max)</option>
+          <option selected>PA_BOOST pin (+20 dBm max)</option>
+        </select>
+
+        <label for="myMaxPower">MaxPower</label>
+        <select onChange="computeRegisters();" id="myMaxPower">
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option selected>7</option>
+        </select>
+
+        <label for="myOutputPower">OutputPower</label>
+        <select onChange="computeRegisters();" id="myOutputPower">
+          <option>0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+          <option>13</option>
+          <option>14</option>
+          <option selected>15</option>
+        </select>
+      </fieldset>
+    </div>
+    <pre>
+      <code class="language-c" id="TAresult">
+        // BW = 7: 125 kHz, CR = 1: 4/5, HM = 0
+        uint8_t reg1 = 0x72;
+        // SF = 12: 12, CRC = 0
+        uint8_t reg2 = 0xC0;
+        // LDRO = 1, AGCAutoOn = 1
+        uint8_t reg3 = 0x0C;
+        // PaSelect = 1, MaxPower = 7: 15 dBm, OutputPower = 15: 17 dBm
+        uint8_t regpaconfig = 0xFF;
+        #define REG_OCP 0x0B
+        #define REG_PA_CONFIG 0x09
+        #define REG_LNA 0x0c
+        #define REG_OP_MODE 0x01
+        #define REG_MODEM_CONFIG_1 0x1d
+        #define REG_MODEM_CONFIG_2 0x1e
+        #define REG_MODEM_CONFIG_3 0x26
+        #define REG_PA_DAC 0x4D
+        #define PA_DAC_HIGH 0x87
+        #define MODE_LONG_RANGE_MODE 0x80
+        #define MODE_SLEEP 0x00
+        #define MODE_STDBY 0x01
+        #define MODE_TX 0x03
+        #define MODE_RX_CONTINUOUS 0x05
+        #define MODE_RX_SINGLE 0x06
+        LoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_SLEEP);
+        delay(10);
+        LoRa.writeRegister(REG_PA_CONFIG, regpaconfig);
+        LoRa.writeRegister(REG_MODEM_CONFIG_1, reg1);
+        LoRa.writeRegister(REG_MODEM_CONFIG_2, reg2);
+        LoRa.writeRegister(REG_MODEM_CONFIG_3, reg3);
+        delay(10);
+        LoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_STDBY);
+      </code>
+    </pre>
+  </body>
+</html>
