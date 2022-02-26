@@ -39,36 +39,37 @@ function computeRegisters() {
   //OutputPowerlabel.Text=pOut+" dBm";
   
   s="";
-  cm="// PaSelect = "+paselect+", MaxPower = "+MaxPower+": "+pmax+" dBm, OutputPower = "+OutputPower+": "+pOut+" dBm"+"\n";
+  cm="// PaSelect = "+paselect+", MaxPower = "+MaxPower+": "+pmax+" dBm, OutputPower = "+OutputPower+": "+pOut+" dBm\n";
   regpaconfig=parseInt(paselect)*128+parseInt(MaxPower)*16+parseInt(OutputPower);
   if (regpaconfig<16) s="0";
   s="uint8_t regpaconfig = 0x"+s+regpaconfig.toString(16)+";";
   TAresult.innerHTML += "\n"+cm+s;
   
-  TAresult.innerHTML += "\n"+"#define REG_OCP 0x0B";
-  TAresult.innerHTML += "\n"+"#define REG_PA_CONFIG 0x09";
-  TAresult.innerHTML += "\n"+"#define REG_LNA 0x0c";
-  TAresult.innerHTML += "\n"+"#define REG_OP_MODE 0x01";
-  TAresult.innerHTML += "\n"+"#define REG_MODEM_CONFIG_1 0x1d";
-  TAresult.innerHTML += "\n"+"#define REG_MODEM_CONFIG_2 0x1e";
-  TAresult.innerHTML += "\n"+"#define REG_MODEM_CONFIG_3 0x26";
-  TAresult.innerHTML += "\n"+"#define REG_PA_DAC 0x4D";
-  TAresult.innerHTML += "\n"+"#define PA_DAC_HIGH 0x87";
-  TAresult.innerHTML += "\n"+"#define MODE_LONG_RANGE_MODE 0x80";
-  TAresult.innerHTML += "\n"+"#define MODE_SLEEP 0x00";
-  TAresult.innerHTML += "\n"+"#define MODE_STDBY 0x01";
-  TAresult.innerHTML += "\n"+"#define MODE_TX 0x03";
-  TAresult.innerHTML += "\n"+"#define MODE_RX_CONTINUOUS 0x05";
-  TAresult.innerHTML += "\n"+"#define MODE_RX_SINGLE 0x06";
+  TAresult.innerHTML += "\n#define REG_OCP 0x0B";
+  TAresult.innerHTML += "\n#define REG_PA_CONFIG 0x09";
+  TAresult.innerHTML += "\n#define REG_LNA 0x0c";
+  TAresult.innerHTML += "\n#define REG_OP_MODE 0x01";
+  TAresult.innerHTML += "\n#define REG_MODEM_CONFIG_1 0x1d";
+  TAresult.innerHTML += "\n#define REG_MODEM_CONFIG_2 0x1e";
+  TAresult.innerHTML += "\n#define REG_MODEM_CONFIG_3 0x26";
+  TAresult.innerHTML += "\n#define REG_PA_DAC 0x4D";
+  TAresult.innerHTML += "\n#define PA_DAC_HIGH 0x87";
+  TAresult.innerHTML += "\n#define MODE_LONG_RANGE_MODE 0x80";
+  TAresult.innerHTML += "\n#define MODE_SLEEP 0x00";
+  TAresult.innerHTML += "\n#define MODE_STDBY 0x01";
+  TAresult.innerHTML += "\n#define MODE_TX 0x03";
+  TAresult.innerHTML += "\n#define MODE_RX_CONTINUOUS 0x05";
+  TAresult.innerHTML += "\n#define MODE_RX_SINGLE 0x06";
   
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_SLEEP);";
-  TAresult.innerHTML += "\n"+"delay(10);";
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_PA_CONFIG, regpaconfig);";
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_MODEM_CONFIG_1, reg1);";
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_MODEM_CONFIG_2, reg2);";
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_MODEM_CONFIG_3, reg3);";
-  TAresult.innerHTML += "\n"+"delay(10);";
-  TAresult.innerHTML += "\n"+"LoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_STDBY);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_SLEEP);";
+  TAresult.innerHTML += "\ndelay(10);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_PA_CONFIG, regpaconfig);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_MODEM_CONFIG_1, reg1);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_MODEM_CONFIG_2, reg2);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_MODEM_CONFIG_3, reg3);";
+  TAresult.innerHTML += "\ndelay(10);";
+  TAresult.innerHTML += "\nLoRa.writeRegister(REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_STDBY);";
   
   hljs.highlightAll();
-}
+} 
+  TAresult.innerHTML += "\n"+"#define MODE_STDBY 0x01";
